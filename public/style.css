@@ -26,6 +26,11 @@ hr {
 	margin-top: 40px;
 }
 
+#user-stories{
+	text-align: left;
+	padding: 0% 20%;
+}
+
 code {
   font-family: monospace;
   padding: 2px;
@@ -33,7 +38,7 @@ code {
   background-color: #fff;
 }
 
-ul {
+.no-markers {
 	list-style-type: none;
 }
 

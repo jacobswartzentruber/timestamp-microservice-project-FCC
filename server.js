@@ -3,7 +3,9 @@
 
 // init project
 var express = require('express');
+var isValid = require('date-fns/isValid');
 var app = express();
+
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
@@ -18,15 +20,22 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+app.get("/api/:date?", function(req, res) {
+  let date =
+    req.params.date
+      ? isNaN(req.params.date)
+          ? new Date(req.params.date)
+          : new Date(parseInt(req.params.date))
+      : new Date();
 
-// your first API endpoint... 
-app.get("/api/hello", function (req, res) {
-  res.json({greeting: 'hello API'});
+  let response = isValid(date)
+    ? {unix: Date.parse(date), utc: date.toUTCString()}
+    : {error: "Invalid Date"};
+
+  res.json(response);
 });
 
-
-
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
+var listener = app.listen(process.env.PORT || 3000, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
